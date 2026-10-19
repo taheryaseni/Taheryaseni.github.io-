@@ -4,77 +4,555 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دنیای من</title>
+  <meta name="theme-color" content="#080811">
+  <meta name="description" content="دنیای طاهر؛ فوتبال، بازی‌های ویدیویی و تکنولوژی">
+  <title>TAHER.exe | My Digital World</title>
+
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap');
+
+    :root {
+      --bg: #080811;
+      --panel: #111120;
+      --purple: #a855f7;
+      --blue: #35c9ff;
+      --text: #f4f3ff;
+      --muted: #aaa9c3;
+      --line: rgba(168,85,247,.24);
+    }
+
     * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: Tahoma, Arial, sans-serif;
-      background: #090909;
-      color: #fff;
+      background:
+        radial-gradient(ellipse at 15% 10%, #261344 0, transparent 35%),
+        radial-gradient(ellipse at 90% 35%, #101c42 0, transparent 32%),
+        var(--bg);
+      color: var(--text);
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .container {
+      width: min(1080px, 90%);
+      margin-inline: auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(8,8,17,.86);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-family: monospace;
+      font-size: 21px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--blue);
+      text-shadow: 0 0 18px #35c9ff70;
+      white-space: nowrap;
+    }
+
+    .logo span { color: var(--purple); }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .navlinks a:hover { color: var(--blue); }
+
+    .lang-btn, .btn {
+      border: 1px solid var(--purple);
+      color: white;
+      background: #a855f719;
+      padding: 9px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: .25s;
+    }
+
+    .lang-btn:hover, .btn:hover {
+      background: var(--purple);
+      box-shadow: 0 0 22px #a855f755;
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      min-height: 490px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: center;
+      gap: 35px;
+      padding-block: 65px;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-size: 12px;
+      letter-spacing: 2px;
+      font-family: monospace;
+    }
+
+    h1 {
+      margin: 12px 0;
+      font-size: clamp(36px, 6vw, 65px);
+      line-height: 1.35;
+      font-weight: 900;
+    }
+
+    .gradient-text {
+      background: linear-gradient(100deg, var(--blue), var(--purple), #f0abfc);
+      color: transparent;
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero p {
+      max-width: 510px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
+    }
+
+    .btn.primary {
+      background: linear-gradient(110deg, #7c3aed, #2563eb);
+      border: 0;
+    }
+
+    .terminal {
+      position: relative;
+      padding: 25px;
+      border: 1px solid #35c9ff55;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #17172b, #0d1020);
+      box-shadow: 0 0 50px #6126ad20, inset 0 0 30px #35c9ff08;
+      transform: rotate(-1deg);
+    }
+
+    .terminal-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      border-bottom: 1px solid #ffffff12;
+      padding-bottom: 15px;
+      margin-bottom: 18px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #a855f7;
+    }
+
+    .dot:nth-child(2) { background: #35c9ff; }
+    .dot:nth-child(3) { background: #f472b6; }
+
+    .terminal-title {
+      margin-inline-start: auto;
+      color: var(--muted);
+      font-size: 11px;
+      font-family: monospace;
+    }
+
+    .code-line {
+      color: var(--blue);
+      font-family: monospace;
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .code-line span { color: #c084fc; }
+    .code-line strong { color: #f0abfc; }
+
+    .avatar {
+      width: 105px;
+      height: 105px;
+      display: grid;
+      place-items: center;
+      margin: 20px auto;
+      border-radius: 30px;
+      font-size: 48px;
+      background: linear-gradient(135deg, #6d28d9, #075985);
+      box-shadow: 0 0 40px #7c3aed55;
+    }
+
+    .status {
       text-align: center;
+      color: #86efac;
+      font-size: 12px;
     }
-    header {
-      padding: 55px 20px 35px;
-      background: linear-gradient(145deg, #310000, #090909 75%);
-      border-bottom: 2px solid #e50914;
+
+    .section { padding-block: 45px; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 22px;
     }
-    h1 { font-size: 34px; margin-bottom: 12px; }
-    header p { color: #ccc; line-height: 2; }
-    section {
-      margin: 22px auto;
-      padding: 24px 18px;
-      width: 90%;
-      max-width: 600px;
-      background: #151515;
-      border: 1px solid #303030;
-      border-radius: 16px;
+
+    .section-head h2 {
+      font-size: 26px;
+      margin: 0;
     }
-    h2 { color: #ff3434; }
-    p { line-height: 2; color: #ddd; }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 12px;
+      margin: 4px 0 0;
+    }
+
+    .section-number {
+      color: var(--purple);
+      font: 13px monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .card {
+      min-width: 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: linear-gradient(145deg, #151527, #0e0e19);
+      transition: .25s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: var(--blue);
+      box-shadow: 0 12px 35px #35c9ff12;
+    }
+
+    .cover {
+      height: 145px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 15px;
+      border-radius: 12px;
+      font-size: 46px;
+      overflow: hidden;
+    }
+
+    .cover.gow {
+      background: radial-gradient(circle at 50% 30%, #9b4b48, #28111c 70%);
+    }
+
+    .cover.racing {
+      background: radial-gradient(circle at 50% 30%, #176e99, #101329 70%);
+    }
+
+    .cover.fantasy {
+      background: radial-gradient(circle at 50% 30%, #64419b, #171126 70%);
+    }
+
     .tag {
       display: inline-block;
-      background: #30090b;
-      border: 1px solid #e50914;
+      border: 1px solid #a855f744;
+      background: #a855f712;
+      color: #d8b4fe;
       border-radius: 20px;
-      padding: 8px 13px;
-      margin: 5px;
+      padding: 3px 9px;
+      font-size: 10px;
     }
-    footer { padding: 25px; color: #888; font-size: 12px; }
+
+    .card h3 { margin: 10px 0 5px; font-size: 17px; }
+    .card p { color: var(--muted); font-size: 12px; margin: 0; }
+
+    .profile {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .profile-box {
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #111120b8;
+    }
+
+    .profile-box h3 { margin-top: 0; }
+    .profile-box p { color: var(--muted); font-size: 14px; }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .chip {
+      padding: 7px 12px;
+      border-radius: 9px;
+      background: #35c9ff0c;
+      border: 1px solid #35c9ff35;
+      color: #a5e9ff;
+      font-size: 12px;
+    }
+
+    .contact {
+      text-align: center;
+      border: 1px solid var(--line);
+      background: linear-gradient(120deg, #24123c, #101b35);
+      border-radius: 22px;
+      padding: 35px 20px;
+    }
+
+    .contact p { color: var(--muted); font-size: 13px; }
+
+    footer {
+      border-top: 1px solid #ffffff12;
+      margin-top: 45px;
+      padding: 24px 0;
+      color: #8988a3;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .ltr { direction: ltr; }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 720px) {
+      .nav { min-height: 62px; }
+      .navlinks { gap: 12px; font-size: 11px; }
+      .hero {
+        grid-template-columns: 1fr;
+        padding-block: 45px;
+        gap: 28px;
+      }
+      .hero-copy { text-align: center; }
+      .hero p { margin-inline: auto; }
+      .actions { justify-content: center; }
+      .terminal { max-width: 440px; width: 100%; margin-inline: auto; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; }
+      .card { padding: 12px; }
+      .cover { height: 110px; }
+      .profile { grid-template-columns: 1fr; }
+      .section { padding-block: 30px; }
+    }
+
+    @media (max-width: 390px) {
+      .navlinks { gap: 8px; }
+      .logo { font-size: 17px; }
+      .lang-btn { padding: 7px 9px; }
+      .grid { grid-template-columns: 1fr; }
+      .cover { height: 145px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
   </style>
 </head>
+
 <body>
+  <div class="topbar">
+    <nav class="container nav">
+      <a class="logo" href="#home">TAHER<span>.exe</span></a>
 
-  <header>
-    <p>WELCOME TO MY WORLD</p>
-    <h1>دنیای من ⚡</h1>
-    <p>فوتبال، گیم و داستان من</p>
-  </header>
+      <div class="navlinks">
+        <a href="#games" data-fa="بازی‌ها" data-en="Games">بازی‌ها</a>
+        <a href="#about" data-fa="درباره من" data-en="About">درباره من</a>
+      </div>
 
-  <section>
-    <h2>⚽ فوتبال</h2>
-    <p>کریستیانو رونالدو؛ اسطوره‌ای که برای من فراتر از یک بازیکنه.</p>
-    <span class="tag">CR7</span>
-    <span class="tag">Real Madrid</span>
-    <span class="tag">2008</span>
-  </section>
+      <button class="lang-btn" id="langToggle" type="button">EN / FA</button>
+    </nav>
+  </div>
 
-  <section>
-    <h2>🎮 دنیای گیم</h2>
-    <p>ماجراجویی در دنیای بازی‌ها و تجربه داستان‌های فراموش‌نشدنی.</p>
-    <span class="tag">God of War</span>
-    <span class="tag">Gran Turismo</span>
-    <span class="tag">Biomutant</span>
-  </section>
+  <main>
+    <header class="container hero" id="home">
+      <div class="hero-copy">
+        <div class="eyebrow">[ DIGITAL WORLD // 001 ]</div>
 
-  <section>
-    <h2>🖤 درباره من</h2>
-    <p>این گوشه‌ای از دنیای منه؛ جایی برای علایق، خاطرات و چیزهایی که دوست دارم.</p>
-  </section>
+        <h1>
+          <span data-fa="به دنیای" data-en="WELCOME TO">به دنیای</span>
+          <br>
+          <span class="gradient-text"
+                data-fa="طاهر خوش اومدی"
+                data-en="TAHER'S WORLD">طاهر خوش اومدی</span>
+        </h1>
+
+        <p data-fa="اینجا دنیای فوتبال، بازی‌های ویدیویی و تکنولوژیه؛ جایی برای علایق من و ماجراجویی‌های دیجیتال."
+           data-en="A world of football, video games and technology. My corner of the internet, built for digital adventures.">
+          اینجا دنیای فوتبال، بازی‌های ویدیویی و تکنولوژیه؛ جایی برای علایق من و ماجراجویی‌های دیجیتال.
+        </p>
+
+        <div class="actions">
+          <a class="btn primary" href="#games"
+             data-fa="مشاهده بازی‌ها ↓"
+             data-en="Explore Games ↓">مشاهده بازی‌ها ↓</a>
+          <a class="btn" href="#about"
+             data-fa="بیشتر درباره من"
+             data-en="About Me">بیشتر درباره من</a>
+        </div>
+      </div>
+
+      <div class="terminal">
+        <div class="terminal-head">
+          <i class="dot"></i><i class="dot"></i><i class="dot"></i>
+          <span class="terminal-title">profile.exe</span>
+        </div>
+
+        <div class="code-line">&gt; <span>initializing</span> profile...</div>
+        <div class="avatar">👾</div>
+        <div class="code-line">&gt; name: <strong>TAHER</strong></div>
+        <div class="code-line">&gt; interests: gaming, football</div>
+        <div class="code-line">&gt; mode: <strong>exploring_worlds</strong></div>
+        <p class="status">● SYSTEM ONLINE</p>
+      </div>
+    </header>
+
+    <section class="container section" id="games">
+      <div class="section-head">
+        <div>
+          <h2 data-fa="دنیای بازی‌ها" data-en="Gaming Universe">دنیای بازی‌ها</h2>
+          <p data-fa="چند گوشه از دنیای گیم من" data-en="A few worlds from my gaming universe">چند گوشه از دنیای گیم من</p>
+        </div>
+        <span class="section-number">01 / GAMES</span>
+      </div>
+
+      <div class="grid">
+        <article class="card">
+          <div class="cover gow">⚔️</div>
+          <span class="tag">ACTION</span>
+          <h3>God of War</h3>
+          <p data-fa="اسطوره‌ها، نبردها و داستان کریتوس."
+             data-en="Mythology, epic battles and Kratos's journey.">
+            اسطوره‌ها، نبردها و داستان کریتوس.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="cover racing">🏎️</div>
+          <span class="tag">RACING</span>
+          <h3>Gran Turismo</h3>
+          <p data-fa="سرعت، ماشین‌ها و رقابت."
+             data-en="Speed, cars and competitive racing.">
+            سرعت، ماشین‌ها و رقابت.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="cover fantasy">🐉</div>
+          <span class="tag">ADVENTURE</span>
+          <h3>Immortals Fenyx Rising</h3>
+          <p data-fa="ماجراجویی در دنیایی افسانه‌ای."
+             data-en="An adventure through a mythical world.">
+            ماجراجویی در دنیایی افسانه‌ای.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container section" id="about">
+      <div class="section-head">
+        <div>
+          <h2 data-fa="درباره من" data-en="About Me">درباره من</h2>
+          <p data-fa="کمی از چیزهایی که دوست دارم"
+             data-en="A little about what I love">کمی از چیزهایی که دوست دارم</p>
+        </div>
+        <span class="section-number">02 / PROFILE</span>
+      </div>
+
+      <div class="profile">
+        <div class="profile-box">
+          <h3 data-fa="⚽ فوتبال و CR7" data-en="⚽ Football & CR7">⚽ فوتبال و CR7</h3>
+          <p data-fa="کریستیانو رونالدو، رقابت و لحظه‌هایی که فوتبال رو هیجان‌انگیز می‌کنن."
+             data-en="Cristiano Ronaldo, competition and the moments that make football exciting.">
+            کریستیانو رونالدو، رقابت و لحظه‌هایی که فوتبال رو هیجان‌انگیز می‌کنن.
+          </p>
+        </div>
+
+        <div class="profile-box">
+          <h3 data-fa="🎮 علاقه‌مندی‌ها" data-en="🎮 Interests">🎮 علاقه‌مندی‌ها</h3>
+          <div class="chips">
+            <span class="chip">PlayStation</span>
+            <span class="chip">Gaming</span>
+            <span class="chip">Technology</span>
+            <span class="chip">CR7</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section">
+      <div class="contact">
+        <div class="eyebrow">[ END OF TRANSMISSION ]</div>
+        <h2 data-fa="به دنیای من خوش اومدی" data-en="Thanks for visiting my world">
+          به دنیای من خوش اومدی
+        </h2>
+        <p data-fa="این سایت تازه شروع ماجراست..."
+           data-en="This website is only the beginning...">
+          این سایت تازه شروع ماجراست...
+        </p>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    ساخته‌شده با ❤️ | MY PERSONAL WEBSITE
+    <div class="container">
+      © 2026 TAHER.exe — <span data-fa="ساخته‌شده با اشتیاق" data-en="Built with passion">ساخته‌شده با اشتیاق</span>
+    </div>
   </footer>
 
+  <script>
+    const toggle = document.getElementById('langToggle');
+    let currentLang = 'fa';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+
+      document.querySelectorAll('[data-fa][data-en]').forEach(el => {
+        el.textContent = el.dataset[lang];
+      });
+
+      toggle.textContent = lang === 'fa' ? 'EN / FA' : 'FA / EN';
+    }
+
+    toggle.addEventListener('click', () => {
+      setLanguage(currentLang === 'fa' ? 'en' : 'fa');
+    });
+  </script>
 </body>
 </html>
